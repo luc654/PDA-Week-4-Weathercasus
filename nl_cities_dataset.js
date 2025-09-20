@@ -1,4 +1,4 @@
-[
+const dataset = [
   {
     "city": "Tilburg", 
     "lat": "51.5500", 
