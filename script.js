@@ -124,17 +124,17 @@ async function genTempData() {
             ...result.forecast,
             locationName: result.location.name,
             avgTemp: result.forecast.forecastday[0].day.avgtemp_c,
-            date: yyyyMMdd // 👈 keep track of the date
+            date: yyyyMMdd //
         };
 
         totalList.push(merged);
         totalTemp += result.forecast.forecastday[0].day.avgtemp_c;
     }
-generateDataMenu(totalList, "avgTemp", "date");  // 👈 tell it which field to use
+generateDataMenu(totalList, "avgTemp", "date");  
 alert(`Average temperature for ${city} is ${totalTemp / daysInPast}`)
-
-
 }
+
+
 
 
 
@@ -151,3 +151,5 @@ async function fetchData(query) {
     } catch (error) {
     }
 }
+
+
