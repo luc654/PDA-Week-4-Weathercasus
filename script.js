@@ -34,11 +34,10 @@ function logicFilter(entries, key) {
     return entries;
 }
 
-const arr = ["tilburg", "amsterdam", "rotterdam"];
 async function fetchList(query) {
     let totalList = [];
-    for (const element of arr) {
-        const quer = query.replace("<city>", element);
+    for (const element of dataset) {
+        const quer = query.replace("<city>", element.city);
         const result = await fetchData(quer);
         const merged = {
             ...result.current,
