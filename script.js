@@ -2,13 +2,18 @@
 
 window.onload = function() { 
     document.getElementById('btn-1').addEventListener('click', genSunData)
+    document.getElementById('btn-2').addEventListener('click', genSunData)
 };
 
+
+// ---------------------------------------------
+// First question
+// ---------------------------------------------
 
 async function genSunData(){
     const dataList = await fetchList("http://api.weatherapi.com/v1/current.json?key=<YOUR_API_KEY>&q=<city>");
     const sortedEntries = logicFilter(dataList);
-    generateDataMenu(sortedEntries);
+    generateDataMenu(sortedEntries, "cloud");
     
 }   
 
@@ -44,7 +49,7 @@ for (const element of arr) {
 
     return totalList;
 }
-function generateDataMenu(entries) {
+function generateDataMenu(entries, highlight) {
     const holder = document.getElementById('holder');
     
     entries.forEach((element, i) => {
@@ -61,6 +66,7 @@ function generateDataMenu(entries) {
         <div class="w-full my-4 bg-green-200 p-4 h-fit">
             <div class="flex justify-between font-bold border-b mb-10">
                 <p>${element.locationName}</p>
+                <p>${highlight}: ${element[highlight]}</p>
                 <button class="details" data-index="${i}">Expand</button>
             </div>
             <div class="hidden" id="detailpage-${i}">
@@ -81,6 +87,8 @@ function generateDataMenu(entries) {
         });
     });   
 }
+
+
 
 
 async function fetchData(query){
