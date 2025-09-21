@@ -13,13 +13,13 @@ window.onload = function () {
 
 async function genSunData() {
     const dataList = await fetchList("http://api.weatherapi.com/v1/current.json?key=<YOUR_API_KEY>&q=<city>");
-    const sortedEntries = logicFilter(dataList, "cloud");
-    generateDataMenu(sortedEntries, "cloud", "");
+    const sortedEntries = logicFilter(dataList, "uv");
+    generateDataMenu(sortedEntries, "uv", "");
 
 }
 
 
-// Sort entries based on 'cloud' parameter using bubblesort
+// Sort entries based on 'uv' parameter using bubblesort
 
 function logicFilter(entries, key) {
     for (var i = 0; i < entries.length; i++) {
@@ -35,6 +35,7 @@ function logicFilter(entries, key) {
 }
 
 async function fetchList(query) {
+    showLoad();
     let totalList = [];
     for (const element of dataset) {
         const quer = query.replace("<city>", element.city);
@@ -46,7 +47,7 @@ async function fetchList(query) {
 
         totalList.push(merged);
     }
-
+    hideLoad()
     return totalList;
 }
 function generateDataMenu(entries, highlight, extraKey) {
@@ -141,6 +142,7 @@ alert(`Average temperature for ${city} is ${totalTemp / daysInPast}`)
 
 
 async function genOverview(){
+    showLoad()
         const dataList = await fetchList("http://api.weatherapi.com/v1/current.json?key=<YOUR_API_KEY>&q=<city>");
  let sortedBucket = []; 
 
@@ -180,6 +182,7 @@ async function genOverview(){
 
         holder.innerHTML += fullDiv;
     });
+    hideLoad();
 }
 
 
@@ -198,3 +201,11 @@ async function fetchData(query) {
 }
 
 
+
+
+function showLoad(){
+    document.getElementById('loading').classList.remove('hidden');
+}
+function hideLoad(){
+    document.getElementById('loading').classList.add('hidden');
+}
