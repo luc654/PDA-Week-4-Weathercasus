@@ -3,6 +3,7 @@
 window.onload = function () {
     document.getElementById('btn-1').addEventListener('click', genSunData)
     document.getElementById('btn-2').addEventListener('click', genTempData)
+    document.getElementById('btn-3').addEventListener('click', genOverview)
 };
 
 
@@ -135,7 +136,52 @@ alert(`Average temperature for ${city} is ${totalTemp / daysInPast}`)
 }
 
 
+// ---------------------------------------------
+// Third question
+// ---------------------------------------------
 
+
+async function genOverview(){
+        const dataList = await fetchList("http://api.weatherapi.com/v1/current.json?key=<YOUR_API_KEY>&q=<city>");
+ let sortedBucket = []; 
+
+    dataList.forEach(city => {
+        const status = city.condition?.text ?? "Unknown";
+        let found = false;
+
+        for (let i = 0; i < sortedBucket.length; i++) {
+            if (sortedBucket[i][0] === status) {
+                sortedBucket[i][1]++;   
+                found = true;
+                break;                  
+            }
+        }
+
+        if (!found) {
+            sortedBucket.push([status, 1]); // add only once if not found
+        }
+    });
+        console.log(sortedBucket);
+
+
+         const holder = document.getElementById('holder');
+    holder.innerHTML = "";
+
+    sortedBucket.forEach((element, i) => {
+        let newDiv = "";
+
+        const fullDiv = `
+        <div class="w-full my-4 bg-green-200 p-4 h-fit">
+            <div class="flex justify-between font-bold border-b mb-10">
+                <p>${element[0]}</p>
+                <p>${element[1]}</p>
+            </div>
+
+        </div>`;
+
+        holder.innerHTML += fullDiv;
+    });
+}
 
 
 async function fetchData(query) {
